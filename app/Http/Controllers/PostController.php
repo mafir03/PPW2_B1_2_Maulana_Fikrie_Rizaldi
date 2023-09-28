@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// #1 nambah model post
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 //return type View
@@ -23,10 +25,12 @@ class PostController extends Controller
     public function index(): View
     {
         //get posts
-        Post::latest()->paginate(5);
+        // #2 define variable
+        $posts = Post::latest()->paginate(5);
 
         //render view with posts
-        return view('index', compact('posts'));
+        // #3 fix routing
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -35,8 +39,9 @@ class PostController extends Controller
      * @return View
      */
     public function create(): View
-    {
-        return view('create');
+    {   
+        // #5 fix routing 2
+        return view('posts.create');
     }
  
     /**
@@ -45,7 +50,9 @@ class PostController extends Controller
      * @param  mixed $request
      * @return RedirectResponse
      */
-    public function store($request): RedirectResponse
+    
+    // # 7 fix request
+    public function store(Request $request): RedirectResponse
     {
         //validate form
         $this->validate($request, [
